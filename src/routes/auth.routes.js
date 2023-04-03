@@ -6,4 +6,5 @@ const formUpload = require("../helper/upload");
 const authControllers = require("../controllers/auth.controllers");
 
 router.post("/login", authControllers.login);
+router.post("/register", authControllers.register);
 module.exports = router;

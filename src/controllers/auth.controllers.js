@@ -26,6 +26,28 @@ const authControllers = {
         return res.status(500).send({ message: error });
       });
   },
+  register: (req, res) => {
+    //PR: bikin validasi keseluruhan endpoint
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
+      if (err) {
+        return res.status(500).send({ message: err.message });
+      } else {
+        const request = {
+          fullname: req.body.fullname,
+          password: hash,
+          email: req.body.email,
+        };
+        return authModels
+          .register(request)
+          .then((result) => {
+            return res.status(201).send({ message: "success", data: result });
+          })
+          .catch((error) => {
+            return res.status(500).send({ message: error });
+          });
+      }
+    });
+  },
 };
 
 module.exports = authControllers;
